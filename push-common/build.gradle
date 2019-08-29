@@ -1,0 +1,7 @@
+
+//artifact = 'cmdb-common'
+jar {
+    enabled = true
+}
+dependencies{
+}

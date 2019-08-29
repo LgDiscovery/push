@@ -1,0 +1,188 @@
+#头像地址
+user:
+  image: d:/upload
+
+spring:
+  profiles:
+    active: prod
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://192.168.3.47:3306/push?useLegacyDatetimeCode=false&serverTimezone=UTC&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
+#      url: jdbc:mysql://localhost:33306/push?useLegacyDatetimeCode=false&serverTimezone=UTC&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+#      username: push
+#      password: push
+#     加密密码,使用加密密码需要启用spring.druid.filter.config.enabled=true
+#      password: eunbQPr1ZrW0X+wcBYvKbxZvRd0jezflgiHfGaJXWTnJ1PHC4fmx9XQwqs6ISp4tqsXVR7BEY/wOg/U8W81KLA==
+#      publicKey
+#      connection-properties: "config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKyq22VKux12LhDjWbyO8UAbWJd4Q0QV1reho3Qip9YsuMVmta0nzflrlpgCz8m/eMPxgvqnEC3Tcd8xan9pDEMCAwEAAQ=="
+#      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 0
+      max-active: 50
+      min-idle: 0
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 10
+      max-open-prepared-statements: 10
+      validation-query: select 'x'
+      validation-query-timeout: 6000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 300000
+      time-between-log-stats-millis: 300000
+      filter:
+#        config:
+#          启用ConfigFilter
+#          enabled: true
+        stat:
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 5000
+          merge-sql: true
+        wall:
+          enabled: false
+          db-type: mysql
+          config:
+            drop-table-allow: false
+            truncate-allow: false
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: true
+        session-stat-max-count: 1000
+        principal-cookie-name:
+        principal-session-name:
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: benqio
+        login-password: benqio
+        allow:
+        deny:
+
+
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: true
+      time-to-live: 86400s
+      cache-null-values: true
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+#    password: redis
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 10s
+        max-idle: 8
+        min-idle: 0
+    timeout: 10s
+#    sentinel:
+#      master: mymaster
+#      nodes: 127.0.0.1:26379,127.0.0.1:26479,127.0.0.1:26579
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  kafka:
+        bootstrap-servers: 127.0.0.1:9092
+        consumer:
+          group-id: push-consumer-group
+          key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          bootstrap-servers: 127.0.0.1:9092
+          enable-auto-commit: false
+          auto-commit-interval: 10000ms
+          properties:
+            session.timeout.ms: 15000
+          max-poll-records: 1000
+          auto-offset-reset: latest
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+            batch-size: 65535
+            buffer-memory: 524288
+
+
+mybatis:
+    typeAliasesPackage: com.benqio.device.manage.common.model,com.benqio.device.manage.common.vo
+    mapper-locations: classpath*:mybatis/mysql/*.xml
+    configuration:
+          map-underscore-to-camel-case: true
+
+server:
+  port: 8858
+tomcat:
+  ssl:
+    enable: true
+    key-store: 'classpath:tomcat.keystore'
+#    key-store: 'file:./config/tomcat.keystore'
+    key-store-password: tomcat
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+    port: 8443
+
+access:
+  adapter:
+    reportUrl: accessAdapter/report
+    heartbeat: 10
+
+
+token:
+  header: X-Auth-Token
+  secret: benqio
+  expiration: 604800 #过期时间,以秒为单位,604800是一星期
+  cookie:
+      name: X-Token
+
+sso:
+  #默认登录页面
+  defaultLoginPath: http://s8.benqio.com:8800/login
+  code: push
+  # 用户中心接口
+  server: http://s8.benqio.com:8800/uc/
+#  server: http://localhost:8071/
+  # 当前服务IP地址
+  apps: http://s8.benqio.com:8899/push/
+  app:
+    web: http://s8.benqio.com:8899
+    code: push
+
+
+
+cmdb:
+  server: http://s8.benqio.com:19999/
+#  server: http://localhost:9999/
+  modelCode: ipc,camera,nvr,dvr,nvrChannel
+
+
+deviceManage:
+#  server: http://localhost:8080/
+  server: http://s8.benqio.com:18080/
+
+
+usercenter:
+  url: http://s8.benqio.com:8855/
+#  url: http://localhost:8071/
+
+
+
+
+
+
+
+
+
+
+
+

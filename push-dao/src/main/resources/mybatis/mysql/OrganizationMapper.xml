@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benqio.push.common.dao.OrganizationDao">
+
+    <resultMap id="OrganizationResultMap"
+               type="com.benqio.push.common.model.Organization">
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="code" jdbcType="VARCHAR" column="code"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="sort" jdbcType="INTEGER" column="sort"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="type" jdbcType="TINYINT" column="type"/>
+        <result property="create_time" jdbcType="TIMESTAMP" column="create_time"/>
+        <result property="update_time" jdbcType="TIMESTAMP" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="OrganizationListItemResultMap"
+               type="com.benqio.push.common.vo.organization.OrganizationListItem"
+               extends="OrganizationResultMap">
+    </resultMap>
+
+    <sql id="BaseList">
+        `id`, 
+        `code`, 
+        `name`, 
+        `sort`, 
+        `state`, 
+        `type`, 
+        `create_time`, 
+        `update_time`
+    </sql>
+
+    <!-- 分页查询组织机构记录列表 -->
+    <select id="query" resultMap="OrganizationListItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM organization
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+            <if test="code!=null and code!=''">`code`=#{code} AND </if>
+            <if test="name!=null and name!=''">`name`=#{name} AND </if>
+            <if test="sort!=null">`sort`=#{sort} AND </if>
+            <if test="state!=null">`state`=#{state} AND </if>
+            <if test="type!=null">`type`=#{type} AND </if>
+            <if test="create_time!=null">`create_time`=#{create_time} AND </if>
+            <if test="update_time!=null">`update_time`=#{update_time} AND </if>
+        </trim>
+        <!--ORDER BY update_time DESC-->
+    </select>
+
+    <!-- 根据主键查询组织机构记录详情 -->
+    <select id="selectById" resultMap="OrganizationResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM organization
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </select>
+
+    <!-- 添加组织机构新纪录 -->
+    <insert id="insert" parameterType="com.benqio.push.common.model.Organization" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO organization (
+            `code`, 
+            `name`, 
+            `sort`, 
+            `state`, 
+            `type`, 
+            `create_time`, 
+            `update_time`
+        )
+        VALUES (
+            #{code}, 
+            #{name}, 
+            #{sort}, 
+            #{state}, 
+            #{type}, 
+            #{create_time}, 
+            #{update_time}
+        )
+    </insert>
+
+    <!-- 更新组织机构记录 -->
+    <update id="update" parameterType="com.benqio.push.common.model.Organization">
+        UPDATE organization
+        <set>
+            <if test="code!=null and code!=''">`code`=#{code}, </if>
+            <if test="name!=null and name!=''">`name`=#{name}, </if>
+            <if test="sort!=null">`sort`=#{sort}, </if>
+            <if test="state!=null">`state`=#{state}, </if>
+            <if test="type!=null">`type`=#{type}, </if>
+            <if test="create_time!=null">`create_time`=#{create_time}, </if>
+            <if test="update_time!=null">`update_time`=#{update_time}, </if>
+        </set>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </update>
+
+    <!-- 根据主键删除组织机构记录 -->
+    <delete id="deleteById" >
+        DELETE FROM organization
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </delete>
+
+</mapper>

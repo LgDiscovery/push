@@ -1,0 +1,59 @@
+buildscript {
+
+	ext {
+		springBootVersion = '2.0.3.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+
+}
+
+apply plugin: 'war'
+
+bootWar{
+	archiveName = "portal.war"
+}
+
+//springBoot {
+//	buildInfo{
+//		properties{
+//			additional=[
+//					"hg":getRevisionNumber()
+//			]
+//		}
+//	}
+//
+//}
+
+dependencies {
+	compile project(":push-common")
+	compile project(":push-dao")
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-websocket')
+	compile('org.springframework.boot:spring-boot-starter-aop')
+//	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+//	compile('org.springframework.session:spring-session-data-redis')
+	runtime('org.springframework.boot:spring-boot-devtools')
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('io.projectreactor:reactor-test')
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+
+	compile('com.benqio.uc:common:1.0.+')
+
+	compile('org.apache.kafka:kafka-streams:1.0.1')
+	compile('org.springframework.kafka:spring-kafka')
+	compile group: 'com.corundumstudio.socketio', name: 'netty-socketio', version: '1.7.16'
+
+
+}

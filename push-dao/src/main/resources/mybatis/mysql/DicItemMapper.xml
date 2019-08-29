@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benqio.push.common.dao.DicItemDao">
+
+    <resultMap id="DicItemResultMap"
+               type="com.benqio.push.common.model.DicItem">
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="code" jdbcType="VARCHAR" column="code"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="typeCode" jdbcType="VARCHAR" column="type_code"/>
+        <result property="value" jdbcType="VARCHAR" column="value"/>
+        <result property="sort" jdbcType="INTEGER" column="sort"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="sign" jdbcType="TINYINT" column="sign"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+        <result property="countState" jdbcType="TINYINT" column="count_state"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="DicItemListItemResultMap"
+               type="com.benqio.push.common.vo.dicitem.DicItemListItem"
+               extends="DicItemResultMap">
+    </resultMap>
+
+    <sql id="BaseList">
+        `id`, 
+        `code`, 
+        `name`, 
+        `type_code`, 
+        `value`, 
+        `sort`, 
+        `state`, 
+        `sign`, 
+        `icon`, 
+        `count_state`, 
+        `update_time`, 
+        `create_time`
+    </sql>
+
+    <!-- 分页查询字典项记录列表 -->
+    <select id="query" resultMap="DicItemListItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM dic_item
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+            <if test="code!=null and code!=''">`code`=#{code} AND </if>
+            <if test="name!=null and name!=''">`name`=#{name} AND </if>
+            <if test="typeCode!=null and typeCode!=''">`type_code`=#{typeCode} AND </if>
+            <if test="value!=null and value!=''">`value`=#{value} AND </if>
+            <if test="sort!=null">`sort`=#{sort} AND </if>
+            <if test="state!=null">`state`=#{state} AND </if>
+            <if test="sign!=null">`sign`=#{sign} AND </if>
+            <if test="icon!=null and icon!=''">`icon`=#{icon} AND </if>
+            <if test="countState!=null">`count_state`=#{countState} AND </if>
+        </trim>
+        <!--ORDER BY update_time DESC-->
+    </select>
+
+    <!-- 根据主键查询字典项记录详情 -->
+    <select id="selectById" resultMap="DicItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM dic_item
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </select>
+
+    <!-- 添加字典项新纪录 -->
+    <insert id="insert" parameterType="com.benqio.push.common.model.DicItem" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO dic_item (
+            `code`, 
+            `name`, 
+            `type_code`, 
+            `value`, 
+            `sort`, 
+            `state`, 
+            `sign`, 
+            `icon`, 
+            `count_state`, 
+            `update_time`, 
+            `create_time`
+        )
+        VALUES (
+            #{code}, 
+            #{name}, 
+            #{typeCode}, 
+            #{value}, 
+            #{sort}, 
+            #{state}, 
+            #{sign}, 
+            #{icon}, 
+            #{countState}, 
+            #{updateTime}, 
+            #{createTime}
+        )
+    </insert>
+
+    <!-- 更新字典项记录 -->
+    <update id="update" parameterType="com.benqio.push.common.model.DicItem">
+        UPDATE dic_item
+        <set>
+            <if test="code!=null and code!=''">`code`=#{code}, </if>
+            <if test="name!=null and name!=''">`name`=#{name}, </if>
+            <if test="typeCode!=null and typeCode!=''">`type_code`=#{typeCode}, </if>
+            <if test="value!=null and value!=''">`value`=#{value}, </if>
+            <if test="sort!=null">`sort`=#{sort}, </if>
+            <if test="state!=null">`state`=#{state}, </if>
+            <if test="sign!=null">`sign`=#{sign}, </if>
+            <if test="icon!=null and icon!=''">`icon`=#{icon}, </if>
+            <if test="countState!=null">`count_state`=#{countState}, </if>
+            <if test="updateTime!=null">`update_time`=#{updateTime}, </if>
+            <if test="createTime!=null">`create_time`=#{createTime}, </if>
+        </set>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </update>
+
+    <!-- 根据主键删除字典项记录 -->
+    <delete id="deleteById" >
+        DELETE FROM dic_item
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </delete>
+
+</mapper>

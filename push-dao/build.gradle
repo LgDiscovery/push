@@ -1,0 +1,9 @@
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    compile project(":push-common")
+
+}

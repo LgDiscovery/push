@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--配置是否使用通用 Mapper 自带的注释扩展，默认 true-->
+        <!--<property name="useMapperCommentGenerator" value="false"/>-->
+
+        <!--model-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.model"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/model.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--dao-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-dao/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.dao"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/dao.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Dao.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--mapper.xml-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-dao/src/main/resources"/>
+            <property name="targetPackage" value="mybatis.mysql"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/mapperXml.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Mapper.xml"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voAdd-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voAdd.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Add.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voEdit-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voEdit.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Edit.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voId-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voId.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Id.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voRemove-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voRemove.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Remove.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voInfo-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voInfo.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Info.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voList-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voList.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}List.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--voListItem-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-common/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.common.vo.${tableClass.shortClassName?lower_case}"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/voListItem.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}ListItem.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--service-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-portal/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.portal.service"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/service.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Service.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--serviceImpl-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-portal/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.portal.service.impl"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/serviceImpl.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}ServiceImpl.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!--controller-->
+        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
+            <property name="singleMode" value="true"/>
+            <property name="targetProject"
+                      value="D:/tts2/push/push-portal/src/main/java"/>
+            <property name="targetPackage" value="com.benqio.push.portal.web.controller"/>
+            <property name="templatePath"
+                      value="file:///D:/tts2/push/generator/template/controller.ftl"/>
+            <property name="fileName" value="${tableClass.shortClassName}Controller.java"/>
+            <property name="templateFormatter"
+                      value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
+        </plugin>
+
+        <!-- 数据库链接url,用户名，密码 -->
+        <jdbcConnection driverClass="${driverClass}"
+                        connectionURL="${connectionURL}"
+                        userId="${userId}"
+                        password="${password}">
+        </jdbcConnection>
+
+        <!-- 用来指定JDBC类型和JAVA类型如何转换-->
+        <javaTypeResolver>
+            <!-- 是否强制DECIMAL 和NUMERIC类型的字段转换为JAVA的java.math.BigDecimal -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成模型的包名和位置　-->
+        <javaModelGenerator targetPackage="${modelPackage}"
+                            targetProject="D:/tts2/push/push-common/src/main/java">
+            <!-- 该属性只对Mybatis3有效，如果true就会使用构造方法入参，如果false就会使用setter方式　默认false -->
+            <property name="constructorBased" value="false"/>
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+        <table tableName="organization" domainObjectName="Organization" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+       <!-- <table tableName="tb_platformcatalog" domainObjectName="PlatFormCatalog" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>&ndash;&gt;-->
+       <!-- <table tableName="tb_platformdevice" domainObjectName="PlatFormDevice" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>-->
+
+        <!--<table tableName="dic_item" domainObjectName="DicItem" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="dic_type" domainObjectName="DicType" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>-->
+
+    </context>
+</generatorConfiguration>

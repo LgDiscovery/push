@@ -1,0 +1,6 @@
+rootProject.name = 'push'
+include 'generator'
+include 'push-common'
+include 'push-dao'
+include 'push-portal'
+

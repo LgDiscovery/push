@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benqio.push.common.dao.DicTypeDao">
+
+    <resultMap id="DicTypeResultMap"
+               type="com.benqio.push.common.model.DicType">
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="code" jdbcType="VARCHAR" column="code"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="DicTypeListItemResultMap"
+               type="com.benqio.push.common.vo.dictype.DicTypeListItem"
+               extends="DicTypeResultMap">
+    </resultMap>
+
+    <sql id="BaseList">
+        `id`, 
+        `code`, 
+        `name`, 
+        `state`, 
+        `update_time`, 
+        `create_time`
+    </sql>
+
+    <!-- 分页查询字典类型记录列表 -->
+    <select id="query" resultMap="DicTypeListItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM dic_type
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+            <if test="code!=null and code!=''">`code`=#{code} AND </if>
+            <if test="name!=null and name!=''">`name`=#{name} AND </if>
+            <if test="state!=null">`state`=#{state} AND </if>
+            <if test="updateTime!=null">`update_time`=#{updateTime} AND </if>
+            <if test="createTime!=null">`create_time`=#{createTime} AND </if>
+        </trim>
+        <!--ORDER BY update_time DESC-->
+    </select>
+
+    <!-- 根据主键查询字典类型记录详情 -->
+    <select id="selectById" resultMap="DicTypeResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM dic_type
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </select>
+
+    <!-- 添加字典类型新纪录 -->
+    <insert id="insert" parameterType="com.benqio.push.common.model.DicType" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO dic_type (
+            `code`, 
+            `name`, 
+            `state`, 
+            `update_time`, 
+            `create_time`
+        )
+        VALUES (
+            #{code}, 
+            #{name}, 
+            #{state}, 
+            #{updateTime}, 
+            #{createTime}
+        )
+    </insert>
+
+    <!-- 更新字典类型记录 -->
+    <update id="update" parameterType="com.benqio.push.common.model.DicType">
+        UPDATE dic_type
+        <set>
+            <if test="code!=null and code!=''">`code`=#{code}, </if>
+            <if test="name!=null and name!=''">`name`=#{name}, </if>
+            <if test="state!=null">`state`=#{state}, </if>
+            <if test="updateTime!=null">`update_time`=#{updateTime}, </if>
+            <if test="createTime!=null">`create_time`=#{createTime}, </if>
+        </set>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </update>
+
+    <!-- 根据主键删除字典类型记录 -->
+    <delete id="deleteById" >
+        DELETE FROM dic_type
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </delete>
+
+</mapper>

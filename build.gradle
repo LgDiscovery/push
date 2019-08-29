@@ -1,0 +1,237 @@
+
+apply plugin: 'java'
+
+buildscript {
+
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse-wtp'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.benqio.push'
+    version="1.0.0"
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        maven { url 'http://repo.benqio.com:8081/repository/maven-releases/'}
+    }
+
+
+
+}
+
+
+
+
+
+subprojects {
+    ext{
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    [compileJava,compileTestJava,javadoc]*.options*.encoding="UTF-8"
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+        jcenter()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+
+    sourceSets {
+        main {
+            java.srcDir 'src/main/java'
+            resources.srcDir 'src/main/resources'
+        }
+        test {
+            java.srcDir 'src/test/java'
+            // resources.srcDir 'src/test/resources' // <=== NOT WORKING
+        }
+    }
+
+    task sourceJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar) {
+        classifier 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    javadoc {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            author true
+            version true
+            links "http://docs.oracle.com/javase/8/docs/api"
+            // title PROJ_ARTIFACTID
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                // groupId 'com.benqio'
+                // artifactId 'benqio-core'
+                // version version
+
+                from components.java
+
+                artifact sourceJar
+                // artifact javadocJar
+            }
+        }
+    }
+
+    publishing {
+        repositories {
+//            maven {
+//                // change to point to your repo, e.g. http://my.org/repo
+//                url '$buildDir/repo'
+//            }
+            maven {
+                name 'maven-releases'
+                url 'http://repo.benqio.com:8081/repository/maven-releases/'
+                credentials {
+                    username 'admin'
+                    password 'admin123'
+                }
+            }
+        }
+    }
+
+    publishing {
+        repositories {
+//            maven {
+//                // change to point to your repo, e.g. http://my.org/repo
+//                url '$buildDir/repo'
+//            }
+            maven {
+                name 'maven-releases'
+                url 'http://repo.benqio.com:8081/repository/maven-releases/'
+                credentials {
+                    username 'admin'
+                    password 'admin123'
+                }
+            }
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name 'local-maven-releases'
+                url 'http://localhost:8081/repository/maven-releases/'
+                credentials {
+                    username 'admin'
+                    password 'admin123'
+                }
+            }
+        }
+    }
+
+
+
+    configurations {
+        // remove default logger
+        all*.exclude module: 'spring-boot-starter-logging'
+        all*.exclude module: 'log4j-over-slf4j'
+        all*.exclude group: 'ch.qos.logback'
+    }
+    dependencies{
+        compile('org.springframework.boot:spring-boot-starter-web')
+        compile('org.springframework.boot:spring-boot-starter-log4j2')
+//        compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
+        compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.1.Final'
+        compile 'com.alibaba:fastjson:1.2.+'
+
+        compile "org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:1.+"
+        compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.+"
+        compile "com.github.pagehelper:pagehelper-spring-boot-starter:1.+"
+        compile "com.github.pagehelper:pagehelper-spring-boot-autoconfigure:1.+"
+        compile "mysql:mysql-connector-java:8.0.11"
+        compile 'com.alibaba:druid-spring-boot-starter:1.1.+'
+        compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.4'
+
+        compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
+        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
+
+
+        compile 'io.jsonwebtoken:jjwt:0.9.0'
+
+        compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+
+        compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+
+        compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
+
+        compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.5.0'
+
+        compile 'cn.hutool:hutool-all:4.1.8'
+
+
+        compile 'com.lmax:disruptor:3.4.1'
+
+
+        compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+        compileOnly('org.projectlombok:lombok')
+
+
+
+    }
+}
+
+
+
+
+
+
+static String getRevisionNumber() {
+    Process process = "hg log -r -1".execute()
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream(),"GBK"));
+    String changeSet = bufferedReader.readLine();
+    process.waitFor()
+    if(Objects.isNull(changeSet)){
+        return ""
+    }
+    String[] changeSetArr = changeSet.split("\\s+")
+    println(changeSetArr.length)
+    for(String str : changeSetArr){
+        println(str)
+    }
+    return changeSetArr[1]
+}
+

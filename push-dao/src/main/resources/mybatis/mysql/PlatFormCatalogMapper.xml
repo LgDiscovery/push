@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benqio.push.common.dao.PlatFormCatalogDao">
+
+    <resultMap id="PlatFormCatalogResultMap"
+               type="com.benqio.push.common.model.PlatFormCatalog">
+        <id property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="standardId" jdbcType="VARCHAR" column="standardId"/>
+        <result property="parentStandardId" jdbcType="VARCHAR" column="parentStandardId"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="platformId" jdbcType="INTEGER" column="platformId"/>
+        <result property="description" jdbcType="VARCHAR" column="description"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="createTime"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="updateTime"/>
+    </resultMap>
+
+    <resultMap id="PlatFormCatalogListItemResultMap"
+               type="com.benqio.push.common.vo.platformcatalog.PlatFormCatalogListItem"
+               extends="PlatFormCatalogResultMap">
+    </resultMap>
+
+    <sql id="BaseList">
+        `id`, 
+        `standardId`, 
+        `parentStandardId`, 
+        `name`, 
+        `platformId`, 
+        `description`, 
+        `createTime`, 
+        `updateTime`
+    </sql>
+
+    <!-- 分页查询平台地区记录列表 -->
+    <select id="query" resultMap="PlatFormCatalogListItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM tb_platformcatalog
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null and id!=''">`id`=#{id} AND </if>
+            <if test="standardId!=null and standardId!=''">`standardId`=#{standardId} AND </if>
+            <if test="parentStandardId!=null and parentStandardId!=''">`parentStandardId`=#{parentStandardId} AND </if>
+            <if test="name!=null and name!=''">`name`=#{name} AND </if>
+            <if test="platformId!=null">`platformId`=#{platformId} AND </if>
+            <if test="description!=null and description!=''">`description`=#{description} AND </if>
+            <if test="createTime!=null">`createTime`=#{createTime} AND </if>
+            <if test="updateTime!=null">`updateTime`=#{updateTime} AND </if>
+        </trim>
+        <!--ORDER BY update_time DESC-->
+    </select>
+
+    <!-- 根据主键查询平台地区记录详情 -->
+    <select id="selectById" resultMap="PlatFormCatalogResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM tb_platformcatalog
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null and id!=''">`id`=#{id} AND </if>
+        </trim>
+    </select>
+
+    <!-- 添加平台地区新纪录 -->
+    <insert id="insert" parameterType="com.benqio.push.common.model.PlatFormCatalog" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO tb_platformcatalog (
+            `standardId`, 
+            `parentStandardId`, 
+            `name`, 
+            `platformId`, 
+            `description`, 
+            `createTime`, 
+            `updateTime`
+        )
+        VALUES (
+            #{standardId}, 
+            #{parentStandardId}, 
+            #{name}, 
+            #{platformId}, 
+            #{description}, 
+            #{createTime}, 
+            #{updateTime}
+        )
+    </insert>
+
+    <!-- 更新平台地区记录 -->
+    <update id="update" parameterType="com.benqio.push.common.model.PlatFormCatalog">
+        UPDATE tb_platformcatalog
+        <set>
+            <if test="standardId!=null and standardId!=''">`standardId`=#{standardId}, </if>
+            <if test="parentStandardId!=null and parentStandardId!=''">`parentStandardId`=#{parentStandardId}, </if>
+            <if test="name!=null and name!=''">`name`=#{name}, </if>
+            <if test="platformId!=null">`platformId`=#{platformId}, </if>
+            <if test="description!=null and description!=''">`description`=#{description}, </if>
+            <if test="createTime!=null">`createTime`=#{createTime}, </if>
+            <if test="updateTime!=null">`updateTime`=#{updateTime}, </if>
+        </set>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null and id!=''">`id`=#{id} AND </if>
+        </trim>
+    </update>
+
+    <!-- 根据主键删除平台地区记录 -->
+    <delete id="deleteById" >
+        DELETE FROM tb_platformcatalog
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null and id!=''">`id`=#{id} AND </if>
+        </trim>
+    </delete>
+
+</mapper>

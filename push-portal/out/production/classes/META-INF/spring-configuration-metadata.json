@@ -1,0 +1,36 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.benqio.push.portal.socketio.config.SocketIOProperties",
+      "name": "socketio",
+      "type": "com.benqio.push.portal.socketio.config.SocketIOProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.benqio.push.portal.socketio.config.SocketIOProperties",
+      "name": "socketio.apk-url-prefix",
+      "description": "APK文件访问URL前缀",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.benqio.push.portal.socketio.config.SocketIOProperties",
+      "name": "socketio.ping-interval",
+      "description": "Ping消息间隔(毫秒)",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.benqio.push.portal.socketio.config.SocketIOProperties",
+      "name": "socketio.ping-timeout",
+      "description": "Ping消息超时时间（毫秒）",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.benqio.push.portal.socketio.config.SocketIOProperties",
+      "name": "socketio.port",
+      "description": "socket端口",
+      "type": "java.lang.Integer"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.benqio.push.common.dao.PlatFormDeviceDao">
+
+    <resultMap id="PlatFormDeviceResultMap"
+               type="com.benqio.push.common.model.PlatFormDevice">
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="standardId" jdbcType="VARCHAR" column="standardId"/>
+        <result property="catalogStandardId" jdbcType="VARCHAR" column="catalogStandardId"/>
+        <result property="orgCode" jdbcType="VARCHAR" column="orgCode"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="platformId" jdbcType="INTEGER" column="platformId"/>
+        <result property="deviceId" jdbcType="VARCHAR" column="deviceId"/>
+        <result property="channelNo" jdbcType="INTEGER" column="channelNo"/>
+        <result property="description" jdbcType="VARCHAR" column="description"/>
+        <result property="errorType" jdbcType="VARCHAR" column="errorType"/>
+        <result property="demandCount" jdbcType="INTEGER" column="demandCount"/>
+        <result property="demandTime" jdbcType="INTEGER" column="demandTime"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="createTime"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="updateTime"/>
+    </resultMap>
+
+    <resultMap id="PlatFormDeviceListItemResultMap"
+               type="com.benqio.push.common.vo.platformdevice.PlatFormDeviceListItem"
+               extends="PlatFormDeviceResultMap">
+    </resultMap>
+
+    <sql id="BaseList">
+        `id`, 
+        `standardId`, 
+        `catalogStandardId`, 
+        `orgCode`, 
+        `name`, 
+        `platformId`, 
+        `deviceId`, 
+        `channelNo`, 
+        `description`, 
+        `errorType`, 
+        `demandCount`, 
+        `demandTime`, 
+        `createTime`, 
+        `updateTime`
+    </sql>
+
+    <!-- 分页查询平台设备记录列表 -->
+    <select id="query" resultMap="PlatFormDeviceListItemResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM tb_platformdevice
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+            <if test="standardId!=null and standardId!=''">`standardId`=#{standardId} AND </if>
+            <if test="catalogStandardId!=null and catalogStandardId!=''">`catalogStandardId`=#{catalogStandardId} AND </if>
+            <if test="orgCode!=null and orgCode!=''">`orgCode`=#{orgCode} AND </if>
+            <if test="name!=null and name!=''">`name`=#{name} AND </if>
+            <if test="platformId!=null">`platformId`=#{platformId} AND </if>
+            <if test="deviceId!=null and deviceId!=''">`deviceId`=#{deviceId} AND </if>
+            <if test="channelNo!=null">`channelNo`=#{channelNo} AND </if>
+            <if test="description!=null and description!=''">`description`=#{description} AND </if>
+            <if test="errorType!=null and errorType!=''">`errorType`=#{errorType} AND </if>
+            <if test="demandCount!=null">`demandCount`=#{demandCount} AND </if>
+            <if test="demandTime!=null">`demandTime`=#{demandTime} AND </if>
+            <if test="createTime!=null">`createTime`=#{createTime} AND </if>
+            <if test="updateTime!=null">`updateTime`=#{updateTime} AND </if>
+        </trim>
+        <!--ORDER BY update_time DESC-->
+    </select>
+
+    <!-- 根据主键查询平台设备记录详情 -->
+    <select id="selectById" resultMap="PlatFormDeviceResultMap">
+        SELECT
+        <include refid="BaseList" />
+        FROM tb_platformdevice
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </select>
+
+    <!-- 添加平台设备新纪录 -->
+    <insert id="insert" parameterType="com.benqio.push.common.model.PlatFormDevice" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO tb_platformdevice (
+            `standardId`, 
+            `catalogStandardId`, 
+            `orgCode`, 
+            `name`, 
+            `platformId`, 
+            `deviceId`, 
+            `channelNo`, 
+            `description`, 
+            `errorType`, 
+            `demandCount`, 
+            `demandTime`, 
+            `createTime`, 
+            `updateTime`
+        )
+        VALUES (
+            #{standardId}, 
+            #{catalogStandardId}, 
+            #{orgCode}, 
+            #{name}, 
+            #{platformId}, 
+            #{deviceId}, 
+            #{channelNo}, 
+            #{description}, 
+            #{errorType}, 
+            #{demandCount}, 
+            #{demandTime}, 
+            #{createTime}, 
+            #{updateTime}
+        )
+    </insert>
+
+    <!-- 更新平台设备记录 -->
+    <update id="update" parameterType="com.benqio.push.common.model.PlatFormDevice">
+        UPDATE tb_platformdevice
+        <set>
+            <if test="standardId!=null and standardId!=''">`standardId`=#{standardId}, </if>
+            <if test="catalogStandardId!=null and catalogStandardId!=''">`catalogStandardId`=#{catalogStandardId}, </if>
+            <if test="orgCode!=null and orgCode!=''">`orgCode`=#{orgCode}, </if>
+            <if test="name!=null and name!=''">`name`=#{name}, </if>
+            <if test="platformId!=null">`platformId`=#{platformId}, </if>
+            <if test="deviceId!=null and deviceId!=''">`deviceId`=#{deviceId}, </if>
+            <if test="channelNo!=null">`channelNo`=#{channelNo}, </if>
+            <if test="description!=null and description!=''">`description`=#{description}, </if>
+            <if test="errorType!=null and errorType!=''">`errorType`=#{errorType}, </if>
+            <if test="demandCount!=null">`demandCount`=#{demandCount}, </if>
+            <if test="demandTime!=null">`demandTime`=#{demandTime}, </if>
+            <if test="createTime!=null">`createTime`=#{createTime}, </if>
+            <if test="updateTime!=null">`updateTime`=#{updateTime}, </if>
+        </set>
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </update>
+
+    <!-- 根据主键删除平台设备记录 -->
+    <delete id="deleteById" >
+        DELETE FROM tb_platformdevice
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="id!=null">`id`=#{id} AND </if>
+        </trim>
+    </delete>
+    <select id="getPlatFormDeviceByOrgCodeAndErrorType" resultMap="PlatFormDeviceResultMap">
+        SELECT
+        <include refid="BaseList"/>
+        FROM tb_platformdevice
+        <trim prefix="WHERE" suffixOverrides="AND">
+            <if test="orgCode!=null and orgCode!=''">
+                `orgCode`=#{orgCode} AND
+            </if>
+            <if test="errorType!=null and errorType!''">
+                `errorType` like concat("%",#{errorType},"%") AND
+            </if>
+        </trim>
+    </select>
+</mapper>
